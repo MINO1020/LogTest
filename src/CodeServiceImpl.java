@@ -87,10 +87,6 @@ public class CodeServiceImpl implements CodeService {
 
         // 4) Redis에서 가져온 각 스니펫 DTO를 한 번만 순회
         for (CodeResponseDTO dto : redisSnippets) {
-            String uuid = dto.getId();                   // 스니펫의 UUID
-            System.out.println("uuid = " + uuid);
-            String status = dto.getStatus();             // "managed" 또는 "deleted"
-            System.out.println("status = " + status);
 
             if ("managed".equalsIgnoreCase(status)) {
                 // ──────────── managed 상태 ────────────

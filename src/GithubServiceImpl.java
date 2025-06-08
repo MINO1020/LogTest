@@ -112,41 +112,12 @@ public class GithubServiceImpl implements GithubService {
 
         commitRepository.saveAll(savedCommits);
 
-//        Map<String, Commit> shaToCommitMap = savedCommits.stream()
-//                .collect(Collectors.toMap(Commit::getId, c -> c));
-//
-//        List<CommitParent> savedParents = newCommits.stream()
-//                .flatMap(item -> {
-//                    String childSha = (String) item.get("sha");
-//                    Commit child = shaToCommitMap.get(childSha);
-//                    List<Map<String, Object>> parents = (List<Map<String, Object>>) item.get("parents");
-//
-//                    return parents.stream()
-//                            .map( parentMap -> {
-//                                String parentSha = (String) parentMap.get("sha");
-//                                Commit parent = shaToCommitMap.get(parentSha);
-//                                if (child != null && parent != null) {
-//                                    CommitParent cp = new CommitParent();
-//                                    cp.setCommit(child);
-//                                    cp.setParent(parent);
-//                                    return cp;
-//                                }
-//                                return null;
-//                            })
-//                            .filter(Objects::nonNull);
-//                })
-//                .collect(Collectors.toList());
-//
-//        System.out.println("savedParents ====================== " + savedParents);
-//        commitParentRepository.saveAll(savedParents);
-
         List<Commit> allCommitList = commitRepository.findAllByBranchId(branch.getId());
 
         return allCommitList.stream()
                 .map(c -> new CommitResponseDTO(c.getId(), c.getBranch().getId() ,c.getMessage(), c.getStats(), c.getDate()))
                 .collect(Collectors.toList());
     }
-
 
     @Override
     @Transactional // 커밋 세부정보는 거의 바뀌지 않으므로, update x
