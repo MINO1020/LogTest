@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBookmarkStorage">
+    <bookmarks>
+      <entry id="05c3921b-8251-4d2f-aaff-50266dfa9f9d">
+        <MyBookMark>
+          <option name="id" value="05c3921b-8251-4d2f-aaff-50266dfa9f9d" />
+          <option name="title" value="print문 저장함" />
+          <option name="filePath" value="$PROJECT_DIR$/src/CodeServiceImpl.java" />
+          <option name="startOffset" value="3151" />
+          <option name="endOffset" value="3395" />
+          <option name="content" value="지움" />
+          <option name="code" value="String uuid = dto.getId();                   // 스니펫의 UUID&#10;            System.out.println(&quot;uuid = &quot; + uuid);&#10;            String status = dto.getStatus();             // &quot;managed&quot; 또는 &quot;deleted&quot;&#10;            System.out.println(&quot;status = &quot; + status);" />
+          <option name="category" value="ddd" />
+          <option name="status" value="managed" />
+        </MyBookMark>
+      </entry>
+      <entry id="0b6d1841-4642-4eac-90a3-e1cd09bcb09d">
+        <MyBookMark>
+          <option name="id" value="0b6d1841-4642-4eac-90a3-e1cd09bcb09d" />
+          <option name="title" value="code entity 만들기" />
+          <option name="filePath" value="$PROJECT_DIR$/src/CodeServiceImpl.java" />
+          <option name="startOffset" value="5951" />
+          <option name="endOffset" value="6576" />
+          <option name="content" value="bulider 패턴 사용함" />
+          <option name="code" value="Codes codeEntity = Codes.builder()&#10;                        .id(requestDto.getId())&#10;                        .title(requestDto.getTitle())&#10;                        .content(requestDto.getContent())&#10;                        .code(requestDto.getCode())&#10;                        .startOffset(requestDto.getStartOffset())&#10;                        .endOffset(requestDto.getEndOffset())&#10;                        .fileName(requestDto.getFilePath())&#10;                        .status(&quot;deleted&quot;)        // &quot;deleted&quot;&#10;                        .commitId(commitId)&#10;                        .codeCategories(category)&#10;                        .build();" />
+          <option name="category" value="리팩토링" />
+          <option name="status" value="managed" />
+        </MyBookMark>
+      </entry>
+      <entry id="53918ede-220a-4e48-84e5-e864870b1842">
+        <MyBookMark>
+          <option name="id" value="53918ede-220a-4e48-84e5-e864870b1842" />
+          <option name="title" value="유효성 검사 코드" />
+          <option name="filePath" value="$PROJECT_DIR$/src/GithubServiceImpl.java" />
+          <option name="startOffset" value="1693" />
+          <option name="endOffset" value="2505" />
+          <option name="content" value="보통 이런 흐름으로 판단" />
+          <option name="code" value="Users user = userRepository.findById(userId)&#10;                .orElseThrow(() -&gt; new GeneralException(ErrorStatus.USER_NOT_FOUND));&#10;&#10;        String token = user.getGithubAccesstoken();&#10;        if (token == null) {&#10;            throw new GeneralException(ErrorStatus.GITHUB_NOT_ACCESS);&#10;        }&#10;&#10;        Owner owner = ownerRepository.findByUserIdAndOwnerName(userId, ownerName)&#10;                .orElseThrow(() -&gt; new GeneralException(ErrorStatus.OWNER_NOT_FOUND));&#10;&#10;        Repo repo = repoRepository.findByOwnerIdAndRepoName(owner.getId(), repoName)&#10;                .orElseThrow(() -&gt; new GeneralException(ErrorStatus.REPO_NOT_FOUND));&#10;&#10;        Branch branch = branchRepository.findByRepoIdAndName(repo.getId(), branchName)&#10;                .orElseThrow(() -&gt; new GeneralException(ErrorStatus.BRANCH_NOT_FOUND));&#10;" />
+          <option name="category" value="기능 구현" />
+          <option name="status" value="managed" />
+        </MyBookMark>
+      </entry>
+      <entry id="bb2cf807-e0ba-4635-8c32-9ab79145ef45">
+        <MyBookMark>
+          <option name="id" value="bb2cf807-e0ba-4635-8c32-9ab79145ef45" />
+          <option name="title" value="원래 주석인코드" />
+          <option name="filePath" value="$PROJECT_DIR$/src/GithubServiceImpl.java" />
+          <option name="startOffset" value="4899" />
+          <option name="endOffset" value="6295" />
+          <option name="content" value="이거 나중에 쓸수도 있음" />
+          <option name="code" value="        Map&lt;String, Commit&gt; shaToCommitMap = savedCommits.stream()&#10;                .collect(Collectors.toMap(Commit::getId, c -&gt; c));&#10;&#10;        List&lt;CommitParent&gt; savedParents = newCommits.stream()&#10;                .flatMap(item -&gt; {&#10;                    String childSha = (String) item.get(&quot;sha&quot;);&#10;                    Commit child = shaToCommitMap.get(childSha);&#10;                    List&lt;Map&lt;String, Object&gt;&gt; parents = (List&lt;Map&lt;String, Object&gt;&gt;) item.get(&quot;parents&quot;);&#10;&#10;                    return parents.stream()&#10;                            .map( parentMap -&gt; {&#10;                                String parentSha = (String) parentMap.get(&quot;sha&quot;);&#10;                                Commit parent = shaToCommitMap.get(parentSha);&#10;                                if (child != null &amp;&amp; parent != null) {&#10;                                    CommitParent cp = new CommitParent();&#10;                                    cp.setCommit(child);&#10;                                    cp.setParent(parent);&#10;                                    return cp;&#10;                                }&#10;                                return null;&#10;                            })&#10;                            .filter(Objects::nonNull);&#10;                })&#10;                .collect(Collectors.toList());&#10;&#10;        System.out.println(&quot;savedParents ====================== &quot; + savedParents);&#10;        commitParentRepository.saveAll(savedParents);" />
+          <option name="category" value="버그 수정" />
+          <option name="status" value="managed" />
+        </MyBookMark>
+      </entry>
+      <entry id="f03f39ff-77c7-4619-ae51-7acb28b96cb0">
+        <MyBookMark>
+          <option name="id" value="f03f39ff-77c7-4619-ae51-7acb28b96cb0" />
+          <option name="title" value="private final" />
+          <option name="filePath" value="$PROJECT_DIR$/src/GithubServiceImpl.java" />
+          <option name="startOffset" value="992" />
+          <option name="endOffset" value="1356" />
+          <option name="content" value="의존성 주입" />
+          <option name="code" value="private final OwnerRepository ownerRepository;&#10;    private final RepoRepository repoRepository;&#10;    private final UserRepository userRepository;&#10;    private final CommitRepository commitRepository;&#10;    private final CommitParentRepository commitParentRepository;&#10;    private final FileRepository fileRepository;&#10;    private final BranchRepository branchRepository;" />
+          <option name="category" value="기능 구현" />
+          <option name="status" value="managed" />
+        </MyBookMark>
+      </entry>
+    </bookmarks>
+  </component>
+</project>
