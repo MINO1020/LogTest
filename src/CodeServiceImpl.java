@@ -63,7 +63,7 @@ public class CodeServiceImpl implements CodeService {
                 request.getStartOffset(),
                 request.getEndOffset(),
                 request.getCode()
-        );
+        ); //code block
 
         if (!success) {
             throw new GeneralException(ErrorStatus.SNIPPET_NOT_FOUND);
