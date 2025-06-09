@@ -49,7 +49,7 @@ public class CodeServiceImpl implements CodeService {
 
         List<CodeResponseDTO> result = redisCommon.getAllSnippets(String.valueOf(userId));
 
-        return result;
+        return result; //codeeee
     }
 
     @Override
