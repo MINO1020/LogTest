@@ -43,14 +43,6 @@ public class CodeServiceImpl implements CodeService {
 
     }
 
-    @Override
-    public List<CodeResponseDTO> getCodeBlocks() {
-        Long userId = SecurityUtil.getCurrentUserId();
-
-        List<CodeResponseDTO> result = redisCommon.getAllSnippets(String.valueOf(userId));
-
-        return result; //codeeee
-    }
 
     @Override
     public SnippetUpdateResponse setCodeBlock(String snippetId, SnippetUpdateRequest request) {
