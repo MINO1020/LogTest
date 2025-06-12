@@ -66,7 +66,7 @@ public class CodeServiceImpl implements CodeService {
         ); //code block
 
         if (!success) {
-            throw new GeneralException(ErrorStatus.SNIPPET_NOT_FOUND);
+            throw new GeneralException(ErrorStatus.SNIPPET_NOT_FOUND); //dddddd
         }
 
         return SnippetUpdateResponse.builder()
