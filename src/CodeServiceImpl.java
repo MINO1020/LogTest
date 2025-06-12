@@ -25,23 +25,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CodeServiceImpl implements CodeService {
 
-    private final CodesRepository codesRepository;
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
-    private final RedisCommon redisCommon;
-    private final CommitRepository commitRepository;
 
-    @Override
-    public CodeResponseDTO addCodeBlock(CodeRequestDTO request) {
-        Long userId = SecurityUtil.getCurrentUserId();
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
 
-        redisCommon.saveSnippet(String.valueOf(userId), request);
-
-        return redisCommon.getSnippet(String.valueOf(userId), request.getId());
-
-    }
 
 
     @Override
