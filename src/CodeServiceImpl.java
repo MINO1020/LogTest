@@ -27,8 +27,6 @@ public class CodeServiceImpl implements CodeService {
 
 
 
-
-
     @Override
     public SnippetUpdateResponse setCodeBlock(String snippetId, SnippetUpdateRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
@@ -52,20 +50,7 @@ public class CodeServiceImpl implements CodeService {
                 .build();
     }
 
-    @Override
-    @Transactional
-    public CommitCodeBlocksResponse commitCodeBlock(String commitId, Map<String, CodeRequestDTO> bookmarksMap) {
-        Long userId = SecurityUtil.getCurrentUserId();
 
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
-
-        List<CodeResponseDTO> redisSnippets = redisCommon.getAllSnippets(String.valueOf(userId));
-
-        // 4) Redis에서 가져온 각 스니펫 DTO를 한 번만 순회
-        for (CodeResponseDTO dto : redisSnippets) {
-
-            if ("managed".equalsIgnoreCase(status)) {
                 // ──────────── managed 상태 ────────────
                 // Redis에서 온 dto를 그대로 DB 엔티티로 변환 저장
 
@@ -81,18 +66,6 @@ public class CodeServiceImpl implements CodeService {
                     category = categoryRepository.save(category);
                 }
 
-                Codes codeEntity = Codes.builder()
-                        .id(dto.getId())                        // UUID 그대로
-                        .title(dto.getTitle())
-                        .content(dto.getContent())
-                        .code(dto.getCode())
-                        .startOffset(dto.getStartOffset())
-                        .endOffset(dto.getEndOffset())
-                        .fileName(dto.getFilePath())
-                        .status(dto.getStatus())                // "managed"
-                        .commitId(commitId)
-                        .codeCategories(category)
-                        .build();
 
                 codesRepository.save(codeEntity);
 
@@ -101,13 +74,6 @@ public class CodeServiceImpl implements CodeService {
                 // Redis에서는 “deleted”로 표시만 되어 있음.
                 // 실제로는 클라이언트(Redis와 함께 전달된 bookmarksMap)에서
                 // 예전 정보를 가져와서 저장.
-
-                CodeRequestDTO requestDto = bookmarksMap.get(uuid);
-                if (requestDto == null) {
-                    throw new GeneralException(
-                            ErrorStatus.SNIPPET_NOT_FOUND
-                    );
-                }
 
                 CodeCategories category = categoryRepository
                         .findByUsersIdAndName(userId, requestDto.getCategory())
@@ -139,13 +105,6 @@ public class CodeServiceImpl implements CodeService {
             }
         }
 
-        redisCommon.deleteSnippet(String.valueOf(userId), commitId);
-
-        // 5) 성공 응답 반환
-        return CommitCodeBlocksResponse.builder()
-                .message("Commit processed: commitId=" + commitId)
-                .build();
-    }
 
 
     @Override
